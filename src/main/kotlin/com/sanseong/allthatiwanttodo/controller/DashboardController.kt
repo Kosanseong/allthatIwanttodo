@@ -24,10 +24,10 @@ class DashboardController(
         return DashboardCreateResponse(dashboardService.writeBoard(request.toModel()).id)
     }
 
-    @GetMapping("/{dashboardId}")
+    @GetMapping("/{id}")
     fun getDashboard(
-        @PathVariable dashboardId: Long,
+        @PathVariable id: Long,
     ): DashboardGetResponse {
-        return DashboardGetResponse.createBy(dashboardService.getBoard(dashboardId))
+        return DashboardGetResponse.createBy(dashboardService.getBoard(id))
     }
 }
