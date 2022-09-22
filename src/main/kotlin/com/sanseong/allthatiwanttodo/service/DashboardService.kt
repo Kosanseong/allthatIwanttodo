@@ -6,6 +6,9 @@ import com.sanseong.allthatiwanttodo.exception.ErrorCode
 import com.sanseong.allthatiwanttodo.model.dashboard.DashboardCreateModel
 import com.sanseong.allthatiwanttodo.model.dashboard.toEntity
 import com.sanseong.allthatiwanttodo.repository.DashboardRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,6 +25,13 @@ class DashboardService(
     fun getBoard(dashboardId: Long): Dashboard {
         return dashboardRepository.findByIdOrNull(dashboardId)
             ?: throw BusinessException(ErrorCode.DASHBOARD_NOT_FOUND)
+    }
+
+    fun getBoardPage(pageable: Pageable): Page<Dashboard> {
+        val dashboards = dashboardRepository.findAll()
+        val count = dashboardRepository.count()
+
+        return PageImpl(dashboards, pageable, count)
     }
 }
 
